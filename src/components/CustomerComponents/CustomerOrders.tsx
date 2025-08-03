@@ -73,7 +73,7 @@ export function CustomerOrders({ customerId }: CustomerOrdersProps) {
                   <th className="px-4 py-2 text-left">Status</th>
                   <th className="px-4 py-2 text-left">Total</th>
                   <th className="px-4 py-2 text-left hidden sm:table-cell">
-                    Scheduled Delivery
+                    Date Ordered
                   </th>
                   <th className="px-4 py-2 text-center">Actions</th>
                 </tr>

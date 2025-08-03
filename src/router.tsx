@@ -8,6 +8,9 @@ import CustomersList from "./pages/Customer";
 import CreateCustomer from "./pages/CreateCustomer";
 import UpdateCustomer from "./pages/UpdateCustomer";
 import CustomerPage from "./pages/ViewCustomer";
+import NewOrderPage from "./pages/CreateOrder";
+import OrderDetailsPage from "./pages/OrderDetailsPage";
+import EditOrderPage from "./pages/EditOrder";
 // add more page imports as needed
 
 function ProtectedRoute({ children }: { children: JSX.Element }) {
@@ -65,6 +68,33 @@ export default function Router() {
           element={
             <ProtectedRoute>
               <CustomerPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/customers/:customerId/orders/new"
+          element={
+            <ProtectedRoute>
+              <NewOrderPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/customers/:customerId/orders/:orderId"
+          element={
+            <ProtectedRoute>
+              <OrderDetailsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/customers/:customerId/orders/edit/:orderId"
+          element={
+            <ProtectedRoute>
+              <EditOrderPage />
             </ProtectedRoute>
           }
         />

@@ -21,8 +21,8 @@ class AuthService {
       );
       return response.data;
     } catch (err: any) {
-      if (axios.isAxiosError(err) && err.response?.data?.error) {
-        const { message } = err.response.data.error;
+      if (axios.isAxiosError(err) && err.response?.data?.error?.message) {
+        const { message } = err.response?.data?.error?.message;
 
         throw new Error(`Login failed : ${message}`);
       }

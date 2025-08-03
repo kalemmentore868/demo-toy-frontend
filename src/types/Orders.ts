@@ -2,7 +2,7 @@ export interface Order {
   id: string;
   customerId: string;
   orderDate: Date;
-  status: string; // adjust to your OrderStatus enum/type if you have one
+  status: "pending" | "shipped" | "delivered" | "cancelled"; // adjust to your OrderStatus enum/type if you have one
   totalAmount: string; // Drizzle returns NUMERIC as string
   createdAt: Date;
   updatedAt: Date;
@@ -28,4 +28,27 @@ export interface NewOrder {
   deliveryState?: string;
   deliveryPostal?: string;
   deliveryCountry?: string;
+}
+
+// src/types/OrderItem.ts
+
+export interface OrderItem {
+  id: string;
+  orderId: string;
+  productId: string;
+  quantity: number;
+  unitPrice: string; // NUMERIC comes back as string
+  totalPrice: string; // NUMERIC comes back as string
+}
+
+export type PopulatedOrderItem = OrderItem & {
+  productName: string;
+};
+
+// For inserts (omit auto‐generated PK):
+export type NewOrderItem = Omit<OrderItem, "id">;
+
+export interface OrderAndItems {
+  order: Order;
+  items: PopulatedOrderItem[];
 }

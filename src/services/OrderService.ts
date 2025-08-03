@@ -1,8 +1,9 @@
 // src/services/OrderService.ts
 import axios from "axios";
 import type { ApiResponse } from "@/types/ApiResponse";
-import type { Order } from "@/types/Orders";
+import type { Order, OrderAndItems } from "@/types/Orders";
 import { API_URL } from "./constants";
+import type { NewOrderSchema } from "@/schemas/order";
 
 export default class OrderService {
   /**
@@ -19,8 +20,10 @@ export default class OrderService {
       );
       return res.data;
     } catch (err: any) {
-      if (axios.isAxiosError(err) && err.response?.data?.message) {
-        throw new Error(`Fetch orders failed: ${err.response.data.message}`);
+      if (axios.isAxiosError(err) && err.response?.data?.error?.message) {
+        throw new Error(
+          `Fetch orders failed: ${err.response?.data?.error?.message}`
+        );
       }
       throw new Error("Fetch orders failed: unable to reach server");
     }
@@ -33,16 +36,18 @@ export default class OrderService {
     customerId: string,
     orderId: string,
     token: string
-  ): Promise<ApiResponse<Order>> {
+  ): Promise<ApiResponse<OrderAndItems>> {
     try {
-      const res = await axios.get<ApiResponse<Order>>(
+      const res = await axios.get<ApiResponse<OrderAndItems>>(
         `${API_URL}/customers/${customerId}/orders/${orderId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       return res.data;
     } catch (err: any) {
-      if (axios.isAxiosError(err) && err.response?.data?.message) {
-        throw new Error(`Get order failed: ${err.response.data.message}`);
+      if (axios.isAxiosError(err) && err.response?.data?.error?.message) {
+        throw new Error(
+          `Get order failed: ${err.response?.data?.error?.message}`
+        );
       }
       throw new Error("Get order failed: unable to reach server");
     }
@@ -53,7 +58,7 @@ export default class OrderService {
    */
   static async create(
     customerId: string,
-    data: Omit<Order, "id" | "createdAt" | "updatedAt">,
+    data: NewOrderSchema,
     token: string
   ): Promise<ApiResponse<Order>> {
     try {
@@ -64,8 +69,10 @@ export default class OrderService {
       );
       return res.data;
     } catch (err: any) {
-      if (axios.isAxiosError(err) && err.response?.data?.message) {
-        throw new Error(`Create order failed: ${err.response.data.message}`);
+      if (axios.isAxiosError(err) && err.response?.data?.error?.message) {
+        throw new Error(
+          `Create order failed: ${err.response?.data?.error?.message}`
+        );
       }
       throw new Error("Create order failed: unable to reach server");
     }
@@ -77,7 +84,7 @@ export default class OrderService {
   static async update(
     customerId: string,
     orderId: string,
-    data: Partial<Omit<Order, "id" | "customerId" | "createdAt" | "updatedAt">>,
+    data: NewOrderSchema,
     token: string
   ): Promise<ApiResponse<Order>> {
     try {
@@ -88,8 +95,10 @@ export default class OrderService {
       );
       return res.data;
     } catch (err: any) {
-      if (axios.isAxiosError(err) && err.response?.data?.message) {
-        throw new Error(`Update order failed: ${err.response.data.message}`);
+      if (axios.isAxiosError(err) && err.response?.data?.error?.message) {
+        throw new Error(
+          `Update order failed: ${err.response?.data?.error?.message}`
+        );
       }
       throw new Error("Update order failed: unable to reach server");
     }
@@ -110,8 +119,10 @@ export default class OrderService {
       );
       return res.data;
     } catch (err: any) {
-      if (axios.isAxiosError(err) && err.response?.data?.message) {
-        throw new Error(`Delete order failed: ${err.response.data.message}`);
+      if (axios.isAxiosError(err) && err.response?.data?.error?.message) {
+        throw new Error(
+          `Delete order failed: ${err.response?.data?.error?.message}`
+        );
       }
       throw new Error("Delete order failed: unable to reach server");
     }

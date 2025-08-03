@@ -16,8 +16,10 @@ export default class CustomerService {
       );
       return res.data;
     } catch (err: any) {
-      if (axios.isAxiosError(err) && err.response?.data?.message) {
-        throw new Error(`Fetch customers failed: ${err.response.data.message}`);
+      if (axios.isAxiosError(err) && err.response?.data?.error?.message) {
+        throw new Error(
+          `Fetch customers failed: ${err.response.data.error?.message}`
+        );
       }
       throw new Error("Fetch customers failed: unable to reach server");
     }
@@ -34,8 +36,10 @@ export default class CustomerService {
       );
       return res.data;
     } catch (err: any) {
-      if (axios.isAxiosError(err) && err.response?.data?.message) {
-        throw new Error(`Get customer failed: ${err.response.data.message}`);
+      if (axios.isAxiosError(err) && err.response?.data?.error?.message) {
+        throw new Error(
+          `Fetch customers failed: ${err.response.data.error?.message}`
+        );
       }
       throw new Error("Get customer failed: unable to reach server");
     }
@@ -56,8 +60,10 @@ export default class CustomerService {
       );
       return res.data;
     } catch (err: any) {
-      if (axios.isAxiosError(err) && err.response?.data?.message) {
-        throw new Error(`Create customer failed: ${err.response.data.message}`);
+      if (axios.isAxiosError(err) && err.response?.data?.error?.message) {
+        throw new Error(
+          `Create Customer failed: ${err.response.data.error?.message}`
+        );
       }
       throw new Error("Create customer failed: unable to reach server");
     }
@@ -79,8 +85,10 @@ export default class CustomerService {
       );
       return res.data;
     } catch (err: any) {
-      if (axios.isAxiosError(err) && err.response?.data?.message) {
-        throw new Error(`Update customer failed: ${err.response.data.message}`);
+      if (axios.isAxiosError(err) && err.response?.data?.error?.message) {
+        throw new Error(
+          `Update Customer failed: ${err.response.data.error?.message}`
+        );
       }
       throw new Error("Update customer failed: unable to reach server");
     }
@@ -97,8 +105,10 @@ export default class CustomerService {
       );
       return res.data;
     } catch (err: any) {
-      if (axios.isAxiosError(err) && err.response?.data?.message) {
-        throw new Error(`Delete customer failed: ${err.response.data.message}`);
+      if (axios.isAxiosError(err) && err.response?.data?.error?.message) {
+        throw new Error(
+          `Delete Customer failed: ${err.response.data.error?.message}`
+        );
       }
       throw new Error("Delete customer failed: unable to reach server");
     }
