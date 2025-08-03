@@ -8,6 +8,7 @@ import { useAuth } from "../context/AuthContext";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
 import AuthService from "@/services/AuthService";
+import logoSrc from "../assets/toyorbitlogo.png";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -42,6 +43,10 @@ const Login: React.FC = () => {
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-lg shadow-md w-full max-w-md space-y-6"
       >
+        <div className="flex items-center justify-center py-1">
+          <img src={logoSrc} alt="ToyOrbit Manager" className="h-20 w-auto" />
+        </div>
+
         <h2 className="text-2xl font-semibold text-center">Login</h2>
 
         <div>
@@ -68,7 +73,7 @@ const Login: React.FC = () => {
           />
         </div>
 
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </Button>
       </form>

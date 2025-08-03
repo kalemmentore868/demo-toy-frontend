@@ -5,7 +5,14 @@ export interface Product {
   name: string;
   description: string | null;
   price: string; // NUMERIC comes back as a string
-  category: string; // adjust to a more specific union if you have one
+  category:
+    | "trucks"
+    | "lego_sets"
+    | "scooters"
+    | "stuffed_animals"
+    | "dolls"
+    | "kitchen_sets"
+    | "jewelry_kits";
   imageUrl: string | null;
   stockQuantity: number;
   createdAt: Date;

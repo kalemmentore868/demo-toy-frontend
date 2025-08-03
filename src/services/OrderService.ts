@@ -127,4 +127,20 @@ export default class OrderService {
       throw new Error("Delete order failed: unable to reach server");
     }
   }
+
+  static async getAllOrders(token: string): Promise<ApiResponse<Order[]>> {
+    try {
+      const res = await axios.get<ApiResponse<Order[]>>(`${API_URL}/orders`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return res.data;
+    } catch (err: any) {
+      if (axios.isAxiosError(err) && err.response?.data?.error?.message) {
+        throw new Error(
+          `Fetch orders failed: ${err.response?.data?.error?.message}`
+        );
+      }
+      throw new Error("Fetch orders failed: unable to reach server");
+    }
+  }
 }

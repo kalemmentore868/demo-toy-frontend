@@ -9,7 +9,14 @@ import {
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
 import { NavLink } from "react-router-dom";
-import { Home, Users, ShoppingCart, LogOut } from "lucide-react";
+import {
+  Home,
+  Users,
+  ShoppingCart,
+  LogOut,
+  ToyBrick,
+  User,
+} from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import logoSrc from "../assets/toyorbitlogo.png";
 import { Button } from "./ui/button";
@@ -18,6 +25,8 @@ const navItems = [
   { title: "Dashboard", to: "/", icon: Home },
   { title: "Customers", to: "/customers", icon: Users },
   { title: "Orders", to: "/orders", icon: ShoppingCart },
+  { title: "Products", to: "/products", icon: ToyBrick },
+  { title: "Users", to: "/users", icon: User },
 ];
 
 export function AppSidebar() {

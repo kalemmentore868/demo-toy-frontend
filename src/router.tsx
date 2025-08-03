@@ -11,6 +11,14 @@ import CustomerPage from "./pages/ViewCustomer";
 import NewOrderPage from "./pages/CreateOrder";
 import OrderDetailsPage from "./pages/OrderDetailsPage";
 import EditOrderPage from "./pages/EditOrder";
+import OrdersList from "./pages/OrdersListPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import ProductsList from "./pages/ProductListing";
+import CreateProductPage from "./pages/CreateProduct";
+import EditProductPage from "./pages/EditProduct";
+import ListUsersPage from "./pages/Users";
+import CreateUserPage from "./pages/CreateUserPage";
+import EditUserPage from "./pages/EditUserPage";
 // add more page imports as needed
 
 function ProtectedRoute({ children }: { children: JSX.Element }) {
@@ -21,6 +29,16 @@ function ProtectedRoute({ children }: { children: JSX.Element }) {
     return null;
   }
   return user ? children : <Navigate to="/login" />;
+}
+
+function AdminProtectedRoute({ children }: { children: JSX.Element }) {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    // you can return a spinner here instead
+    return null;
+  }
+  return user?.role === "admin" ? children : <Navigate to="/" />;
 }
 
 export default function Router() {
@@ -41,6 +59,69 @@ export default function Router() {
           element={
             <ProtectedRoute>
               <CustomersList />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/orders"
+          element={
+            <ProtectedRoute>
+              <OrdersList />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute>
+              <ListUsersPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/users/new"
+          element={
+            <AdminProtectedRoute>
+              <CreateUserPage />
+            </AdminProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/users/edit/:id"
+          element={
+            <AdminProtectedRoute>
+              <EditUserPage />
+            </AdminProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/products"
+          element={
+            <ProtectedRoute>
+              <ProductsList />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/products/new"
+          element={
+            <ProtectedRoute>
+              <CreateProductPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/products/edit/:productId"
+          element={
+            <ProtectedRoute>
+              <EditProductPage />
             </ProtectedRoute>
           }
         />
@@ -98,7 +179,16 @@ export default function Router() {
             </ProtectedRoute>
           }
         />
+
         {/* add more protected routes here */}
+        <Route
+          path="*"
+          element={
+            <ProtectedRoute>
+              <NotFoundPage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
