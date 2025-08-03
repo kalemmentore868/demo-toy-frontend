@@ -18,6 +18,8 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { toast } from "react-toastify";
+import ReportsService from "@/services/ReportsService";
+import { useState } from "react";
 
 interface CustomerDetailsProps {
   customerId: string;
@@ -27,6 +29,7 @@ export function CustomerDetails({ customerId }: CustomerDetailsProps) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [reportGenerating, setReportGenerating] = useState(false);
 
   const {
     data: customer,
@@ -54,6 +57,31 @@ export function CustomerDetails({ customerId }: CustomerDetailsProps) {
       toast.error(`Delete failed: ${err.message}`);
     },
   });
+
+  const handleDownload = async () => {
+    if (!user) return;
+    setReportGenerating(true);
+    try {
+      const pdfBlob = await ReportsService.downloadCustomerReport(
+        customerId,
+        user.token
+      );
+      // Create a link to download
+      const url = URL.createObjectURL(pdfBlob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `customer-${customer?.name}-report.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch (e: any) {
+      console.error(e);
+      toast.error(e.message);
+    } finally {
+      setReportGenerating(false);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -131,6 +159,10 @@ export function CustomerDetails({ customerId }: CustomerDetailsProps) {
               </DialogFooter>
             </DialogContent>
           </Dialog>
+
+          <Button disabled={reportGenerating} onClick={handleDownload}>
+            {reportGenerating ? "Report Generating..." : "Export Report"}
+          </Button>
         </div>
       </CardContent>
     </Card>

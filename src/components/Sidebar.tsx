@@ -1,7 +1,6 @@
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupLabel,
   SidebarGroupContent,
@@ -12,6 +11,8 @@ import {
 import { NavLink } from "react-router-dom";
 import { Home, Users, ShoppingCart, LogOut } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+import logoSrc from "../assets/toyorbitlogo.png";
+import { Button } from "./ui/button";
 
 const navItems = [
   { title: "Dashboard", to: "/", icon: Home },
@@ -25,6 +26,9 @@ export function AppSidebar() {
     <Sidebar collapsible="icon" variant="sidebar">
       <SidebarContent>
         <SidebarGroup>
+          <div className="flex items-center justify-start py-4">
+            <img src={logoSrc} alt="ToyOrbit Manager" className="h-20 w-auto" />
+          </div>
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -36,7 +40,7 @@ export function AppSidebar() {
                       to={to}
                       className={({ isActive }) =>
                         `flex items-center space-x-2 px-2 py-1 rounded-md transition-colors
-                         hover:bg-accent/10
+                         hover:bg-accent/10 text-lg
                          ${
                            isActive
                              ? "bg-accent text-accent-foreground"
@@ -50,27 +54,19 @@ export function AppSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+
+              <SidebarMenuItem className="mt-5">
+                {
+                  <Button variant={"destructive"} size={"lg"} onClick={logout}>
+                    <LogOut className="h-5 w-5" />
+                    <span>Logout</span>
+                  </Button>
+                }
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              {
-                <button
-                  onClick={logout}
-                  className="flex w-full items-center space-x-2 px-2 py-1 rounded-md transition-colors text-foreground hover:bg-accent/10"
-                >
-                  <LogOut className="h-5 w-5" />
-                  <span>Logout</span>
-                </button>
-              }
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
     </Sidebar>
   );
 }
