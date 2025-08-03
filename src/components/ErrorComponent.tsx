@@ -21,9 +21,9 @@ export function ErrorPage({
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>{message}</AlertDescription>
           {onRetry && (
-            <div className="mt-4 flex justify-end">
-              <Button onClick={onRetry}>Retry</Button>
-            </div>
+            <Button className="mt-3 w-[100px]" size={"lg"} onClick={onRetry}>
+              Retry
+            </Button>
           )}
         </Alert>
       </div>

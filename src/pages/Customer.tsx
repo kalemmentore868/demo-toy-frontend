@@ -28,24 +28,28 @@ export default function CustomersList() {
           <Button variant={"success"}>Create New Customer</Button>
         </Link>
       </div>
-      <table className="min-w-full divide-y divide-border">
-        <thead>
-          <tr>
-            <th className="px-4 py-2 text-left">Name</th>
-            <th className="px-4 py-2 text-left">Email</th>
-            <th className="px-4 py-2 text-left hidden sm:table-cell">Phone</th>
-            <th className="px-4 py-2 text-left hidden md:table-cell">
-              Country
-            </th>
-            <th className="px-4 py-2 text-center">Actions</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-border w-full">
-          {customers!.map((customer) => (
-            <CustomerRow key={customer.id} customer={customer} />
-          ))}
-        </tbody>
-      </table>
+      <div className="overflow-x-auto md:overflow-x-visible">
+        <table className="min-w-max md:min-w-full divide-y divide-border">
+          <thead>
+            <tr>
+              <th className="px-4 py-2 text-left">Name</th>
+              <th className="px-4 py-2 text-left">Email</th>
+              <th className="px-4 py-2 text-left hidden sm:table-cell">
+                Phone
+              </th>
+              <th className="px-4 py-2 text-left hidden md:table-cell">
+                Country
+              </th>
+              <th className="px-4 py-2 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border w-full">
+            {customers!.map((customer) => (
+              <CustomerRow key={customer.id} customer={customer} />
+            ))}
+          </tbody>
+        </table>
+      </div>
     </Layout>
   );
 }

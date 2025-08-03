@@ -46,29 +46,31 @@ export default function ListUsersPage() {
           </Link>
         )}
       </div>
-      <table className="min-w-full divide-y divide-border">
-        <thead>
-          <tr>
-            <th className="px-4 py-2 text-left">Username</th>
-            <th className="px-4 py-2 text-left">Email</th>
-            <th className="px-4 py-2 text-left">Role</th>
-            {user!.role === "admin" && (
-              <th className="px-4 py-2 text-center">Actions</th>
-            )}
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-border">
-          {users!.map((u: User) => (
-            <UserRow
-              key={u.id}
-              user={u}
-              onDelete={handleDelete}
-              currentRole={user!.role}
-              isDeleting={deleteMutation.isPending}
-            />
-          ))}
-        </tbody>
-      </table>
+      <div className="overflow-x-auto md:overflow-x-visible">
+        <table className="min-w-max md:min-w-full divide-y divide-border">
+          <thead>
+            <tr>
+              <th className="px-4 py-2 text-left">Username</th>
+              <th className="px-4 py-2 text-left">Email</th>
+              <th className="px-4 py-2 text-left">Role</th>
+              {user!.role === "admin" && (
+                <th className="px-4 py-2 text-center">Actions</th>
+              )}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border">
+            {users!.map((u: User) => (
+              <UserRow
+                key={u.id}
+                user={u}
+                onDelete={handleDelete}
+                currentRole={user!.role}
+                isDeleting={deleteMutation.isPending}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
     </Layout>
   );
 }

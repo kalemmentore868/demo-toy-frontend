@@ -126,13 +126,17 @@ export function CustomerDetails({ customerId }: CustomerDetailsProps) {
           </div>
           {customer!.country && <div>{customer!.country}</div>}
         </div>
-        <div className="flex space-x-2 pt-4">
+        <div className="flex flex-col space-y-2 pt-4 md:flex-row md:space-x-2 md:space-y-0">
           <Link to={`/customers/edit/${customerId}`}>
-            <Button variant="outline">Edit</Button>
+            <Button className="w-full md:w-auto" variant="outline">
+              Edit
+            </Button>
           </Link>
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="destructive">Delete</Button>
+              <Button className="w-full md:w-auto" variant="destructive">
+                Delete
+              </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
@@ -160,7 +164,11 @@ export function CustomerDetails({ customerId }: CustomerDetailsProps) {
             </DialogContent>
           </Dialog>
 
-          <Button disabled={reportGenerating} onClick={handleDownload}>
+          <Button
+            className="w-full md:w-auto"
+            disabled={reportGenerating}
+            onClick={handleDownload}
+          >
             {reportGenerating ? "Report Generating..." : "Export Report"}
           </Button>
         </div>

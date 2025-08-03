@@ -7,8 +7,9 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
+  useSidebar,
 } from "@/components/ui/sidebar";
-import { NavLink } from "react-router-dom";
+import { NavLink, useResolvedPath, useMatch } from "react-router-dom";
 import {
   Home,
   Users,
@@ -19,7 +20,6 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import logoSrc from "../assets/toyorbitlogo.png";
-import { Button } from "./ui/button";
 
 const navItems = [
   { title: "Dashboard", to: "/", icon: Home },
@@ -31,46 +31,50 @@ const navItems = [
 
 export function AppSidebar() {
   const { logout } = useAuth();
+  const { state } = useSidebar();
+
   return (
     <Sidebar collapsible="icon" variant="sidebar">
       <SidebarContent>
         <SidebarGroup>
-          <div className="flex items-center justify-start py-4">
-            <img src={logoSrc} alt="ToyOrbit Manager" className="h-20 w-auto" />
-          </div>
+          {state === "expanded" && (
+            <div className="flex items-center justify-start py-4">
+              <img
+                src={logoSrc}
+                alt="ToyOrbit Manager"
+                className="h-20 w-auto"
+              />
+            </div>
+          )}
+
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {navItems.map(({ title, to, icon: Icon }) => (
-                <SidebarMenuItem key={title}>
-                  {/* asChild must wrap *exactly one* element, with no newlines */}
-                  <SidebarMenuButton asChild>
-                    <NavLink
-                      to={to}
-                      className={({ isActive }) =>
-                        `flex items-center space-x-2 px-2 py-1 rounded-md transition-colors
-                         hover:bg-accent/10 text-lg
-                         ${
-                           isActive
-                             ? "bg-accent text-accent-foreground"
-                             : "text-foreground"
-                         }`
-                      }
-                    >
-                      <Icon className="h-5 w-5" />
-                      <span>{title}</span>
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {navItems.map(({ title, to, icon: Icon }) => {
+                const resolved = useResolvedPath(to);
+                // if to === '/', only match exactly; otherwise allow prefix matches
+                const match = useMatch({
+                  path: resolved.pathname,
+                  end: to === "/",
+                });
+                return (
+                  <SidebarMenuItem key={title}>
+                    {/* asChild must wrap *exactly one* element, with no newlines */}
+                    <SidebarMenuButton asChild isActive={!!match}>
+                      <NavLink to={to}>
+                        <Icon className="h-5 w-5" />
+                        <span>{title}</span>
+                      </NavLink>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
 
               <SidebarMenuItem className="mt-5">
-                {
-                  <Button variant={"destructive"} size={"lg"} onClick={logout}>
-                    <LogOut className="h-5 w-5" />
-                    <span>Logout</span>
-                  </Button>
-                }
+                <SidebarMenuButton variant={"destructive"} onClick={logout}>
+                  <LogOut className="h-5 w-5" />
+                  <span>Logout</span>
+                </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>

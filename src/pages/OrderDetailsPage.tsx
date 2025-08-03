@@ -113,7 +113,7 @@ export default function OrderDetailsPage() {
               <span className="font-medium">Total Amount:</span> $
               {order.totalAmount}
             </div>
-            <div className="pt-4 flex space-x-2">
+            <div className="pt-4 mt-7 flex space-x-2">
               <Link to={`/customers/${customerId}/orders/edit/${order.id}`}>
                 <Button variant="outline">Edit Order</Button>
               </Link>

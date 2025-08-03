@@ -27,7 +27,7 @@ export function OrderRow({ order, customerId }: OrderRowProps) {
       <td className="px-4 py-2 whitespace-nowrap">${formattedTotal}</td>
 
       {/* Scheduled Delivery (hide on small) */}
-      <td className="px-4 py-2 whitespace-nowrap hidden sm:table-cell">
+      <td className="px-4 py-2 whitespace-nowrap ">
         {new Date(order.scheduledDeliveryDate).toLocaleDateString()}
       </td>
 

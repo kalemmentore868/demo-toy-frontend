@@ -200,12 +200,15 @@ export function OrderForm({
           </div>
 
           {fields.map((field, idx) => (
-            <div key={field.id} className="grid grid-cols-6 gap-2 items-end">
+            <div
+              key={field.id}
+              className="grid grid-cols-1 gap-2 items-end md:grid-cols-6"
+            >
               <FormField
                 control={control}
                 name={`items.${idx}.productId`}
                 render={({ field }) => (
-                  <FormItem className="col-span-2">
+                  <FormItem className="md:col-span-2">
                     <FormLabel>Product</FormLabel>
                     <FormControl>
                       <Select
@@ -233,7 +236,7 @@ export function OrderForm({
                 control={control}
                 name={`items.${idx}.quantity`}
                 render={({ field }) => (
-                  <FormItem className="col-span-1">
+                  <FormItem className="md:col-span-1">
                     <FormLabel>Qty</FormLabel>
                     <FormControl>
                       <Input
@@ -250,21 +253,21 @@ export function OrderForm({
                 )}
               />
 
-              <FormItem className="col-span-1">
+              <FormItem className="md:col-span-1">
                 <FormLabel>Unit</FormLabel>
                 <FormControl>
                   <Input value={lineInfos[idx].unit} disabled />
                 </FormControl>
               </FormItem>
 
-              <FormItem className="col-span-1">
+              <FormItem className="md:col-span-1">
                 <FormLabel>Total</FormLabel>
                 <FormControl>
                   <Input value={lineInfos[idx].total} disabled />
                 </FormControl>
               </FormItem>
 
-              <div className="col-span-1 text-right">
+              <div className="md:col-span-1 text-right">
                 <Button variant="ghost" size="icon" onClick={() => remove(idx)}>
                   ×
                 </Button>

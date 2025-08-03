@@ -16,8 +16,8 @@ export default function OrdersList() {
       <div className="mb-6">
         <h1 className="text-2xl font-semibold">All Orders</h1>
       </div>
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-border">
+      <div className="overflow-x-auto md:overflow-x-visible">
+        <table className="min-w-max md:min-w-full divide-y divide-border">
           <thead>
             <tr>
               <th className="px-4 py-2 text-left">Order Date</th>
